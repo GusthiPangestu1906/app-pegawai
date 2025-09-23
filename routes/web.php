@@ -1,18 +1,5 @@
 <?php
 
-use App\Models\Post; 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
-Route::get('/posts', function () {
-    return view('posts', [
-        'title' => 'Blog',
-        'posts' => Post::all()
-    ]);
-});
-
-Route::get('/posts/{slug}', function ($slug) {
-    return view('post', [
-        'title' => 'Single Post',
-        'post' => Post::find($slug)
-    ]);
-});
+Route::resource('employees', EmployeeController::class);
