@@ -116,6 +116,26 @@
             </div>
 
             <div class="form-group">
+                <label for="departemen_id">Departemen</label>
+                <select id="departemen_id" name="departemen_id" required>
+                    <option value="">-- Pilih Departemen --</option>
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}">{{ $department->nama_departemen }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="jabatan_id">Jabatan</label>
+                <select id="jabatan_id" name="jabatan_id" required>
+                    <option value="">-- Pilih Jabatan --</option>
+                    @foreach ($positions as $position)
+                        <option value="{{ $position->id }}">{{ $position->nama_jabatan }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="tanggal_masuk">Tanggal Masuk</label>
                 <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
             </div>
