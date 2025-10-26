@@ -1,3 +1,10 @@
+@extends('master')
+
+@section('title', 'Edit Data Pegawai')
+@section('page-title', 'Edit Data Pegawai')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,3 +120,4 @@
 
 </body>
 </html>
+@endsection

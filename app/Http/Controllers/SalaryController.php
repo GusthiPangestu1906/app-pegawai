@@ -16,7 +16,7 @@ class SalaryController extends Controller
         return view('salaries.create', compact('employees'));
     }
 
-public function store(Request $request) {
+    public function store(Request $request) {
         $request->validate([
             'employee_id' => 'required|exists:employees,id',
             'bulan' => 'required|string|max:10',

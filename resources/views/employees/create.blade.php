@@ -1,3 +1,10 @@
+@extends('master')
+
+@section('title', 'Tambah Pegawai')
+@section('page-title', 'Tambah Pegawai')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,3 +162,4 @@
 
 </body>
 </html>
+@endsection
