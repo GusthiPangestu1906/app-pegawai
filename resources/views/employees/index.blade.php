@@ -99,10 +99,10 @@
     <table class="simple-table">
         <thead>
             <tr>
+                {{-- BAGIAN INI DIUBAH --}}
                 <th>Nama Lengkap</th>
-                <th>Email</th>
-                <th>Nomor Telepon</th>
-                <th>Alamat</th>
+                <th>Departemen</th>
+                <th>Jabatan</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -111,10 +111,10 @@
             {{-- Loop untuk menampilkan setiap data pegawai --}}
             @foreach ($employees as $employee)
                 <tr>
+                    {{-- BAGIAN INI JUGA DIUBAH --}}
                     <td>{{ $employee->nama_lengkap }}</td>
-                    <td>{{ $employee->email }}</td>
-                    <td>{{ $employee->nomor_telepon }}</td>
-                    <td>{{ $employee->alamat }}</td>
+                    <td>{{ $employee->department->nama_departemen }}</td>
+                    <td>{{ $employee->position->nama_jabatan }}</td>
                     <td>{{ $employee->status }}</td>
                     <td class="action-links">
                         <a href="{{ route('employees.show', $employee->id) }}">Detail</a>

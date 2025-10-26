@@ -9,16 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('attendance', function (Blueprint $table) {
+    public function up(): void {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
+            $table->unsignedBigInteger('employee_id');
             $table->date('tanggal');
             $table->time('waktu_masuk')->nullable();
             $table->time('waktu_keluar')->nullable();
             $table->enum('status_absensi', ['hadir', 'izin', 'sakit', 'alpha']);
             $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 

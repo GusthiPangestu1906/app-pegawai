@@ -8,10 +8,8 @@ use App\Models\Position;
 
 class EmployeeController extends Controller
 {
-    public function index()
-    {
-        $employees = Employee::latest()->paginate(5);
-
+    public function index() {
+        $employees = \App\Models\Employee::with(['department', 'position'])->latest()->paginate(10);
         return view('employees.index', compact('employees'));
     }
 
@@ -33,7 +31,7 @@ class EmployeeController extends Controller
         'alamat'        => 'required|string|max:255',
         'tanggal_masuk' => 'required|date',
         'status'        => 'required|string|max:50',
-        'department_id' => 'required|exists:departments,id',
+        'departemen_id' => 'required|exists:departments,id',
         'jabatan_id'    => 'required|exists:positions,id',
     ]);
 
@@ -60,18 +58,12 @@ class EmployeeController extends Controller
             'alamat'        => 'required|string|max:255',
             'tanggal_masuk' => 'required|date',
             'status'        => 'required|string|max:50',
+            'departemen_id' => 'required|exists:departments,id',
+            'jabatan_id'    => 'required|exists:positions,id',
         ]);
 
         $employee = Employee::findOrFail($id);
-        $employee->update($request->only([
-            'nama_lengkap',
-            'email',
-            'nomor_telepon',
-            'tanggal_lahir',
-            'alamat',
-            'tanggal_masuk',
-            'status'
-        ]));
+        $employee->update($request->all());
 
         return redirect()->route('employees.index');
     }
