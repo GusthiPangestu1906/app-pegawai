@@ -75,6 +75,16 @@
 </style>
 
 <div class="form-container">
+    @if ($errors->any())
+        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;">
+            <ul style="margin: 0; padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('departments.update', $department->id) }}" method="POST">
         @csrf
         @method('PUT')

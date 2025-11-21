@@ -46,22 +46,5 @@ class Attendance extends Model
         );
     }
 
-    /**
-     * ACCESSOR: Memberikan keterangan keterlambatan.
-     * Akan bisa diakses melalui $attendance->keterangan_terlambat
-     */
-    protected function keteranganTerlambat(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value, $attributes) {
-                $jamMasukStandar = Carbon::parse('08:00:00');
-                $waktuMasukActual = Carbon::parse($attributes['waktu_masuk']);
 
-                if ($waktuMasukActual->gt($jamMasukStandar)) {
-                    return 'Terlambat';
-                }
-                return 'Tepat Waktu';
-            }
-        );
-    }
 }

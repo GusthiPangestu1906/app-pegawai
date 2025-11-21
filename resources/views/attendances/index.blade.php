@@ -52,9 +52,6 @@
                     <td>{{ \Carbon\Carbon::parse($attendance->tanggal)->format('d F Y') }}</td>
                     <td>
                         {{ $attendance->waktu_masuk ? \Carbon\Carbon::parse($attendance->waktu_masuk)->format('H:i') : '-' }}
-                        @if($attendance->status_absensi == 'hadir' && $attendance->keterangan_terlambat == 'Terlambat')
-                           <div class="keterangan-terlambat">(Terlambat)</div>
-                        @endif
                     </td>
                     <td>{{ $attendance->waktu_keluar ? \Carbon\Carbon::parse($attendance->waktu_keluar)->format('H:i') : '-' }}</td>
                     <td>{{ $attendance->durasi_kerja }}</td>

@@ -125,7 +125,7 @@
     <table class="simple-table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Nama Departemen</th>
                 <th>Aksi</th>
             </tr>
@@ -133,7 +133,7 @@
         <tbody>
             @foreach ($departments as $department)
                 <tr>
-                    <td>{{ $department->id }}</td>
+                    <td>{{ ($departments->currentPage() - 1) * $departments->perPage() + $loop->iteration }}</td>
                     <td>{{ $department->nama_departemen }}</td>
                     <td class="action-links">
                         <a href="{{ route('departments.edit', $department->id) }}">Edit</a>

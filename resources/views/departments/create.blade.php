@@ -79,11 +79,27 @@
 </style>
 
 <div class="form-container">
+    @if ($errors->any())
+        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;">
+            <ul style="margin: 0; padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session('success'))
+        <div class="alert alert-success" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724;">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('departments.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="nama_departemen">Nama Departemen</label>
-            <input type="text" id="nama_departemen" name="nama_departemen" required>
+            <input type="text" id="nama_departemen" name="nama_departemen" value="{{ old('nama_departemen') }}" required placeholder="Masukkan Nama Departemen">
         </div>
         <button type="submit" class="btn-submit">Simpan</button>
     </form>

@@ -21,12 +21,14 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_departemen' => 'required|string|max:100',
+            'nama_departemen' => 'required|string|max:100|unique:departments,nama_departemen',
+        ], [
+            'nama_departemen.unique' => 'Nama departemen sudah ada dalam database. Silakan gunakan nama yang berbeda.',
         ]);
 
-        Department::create($request->all());
+        Department::create($request->only(['nama_departemen']));
 
-        return redirect()->route('departments.index');
+        return redirect()->route('departments.index')->with('success', 'Departemen berhasil ditambahkan');
     }
 
     public function show(Department $department)
@@ -42,12 +44,14 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $request->validate([
-            'nama_departemen' => 'required|string|max:100',
+            'nama_departemen' => 'required|string|max:100|unique:departments,nama_departemen,'.$department->id,
+        ], [
+            'nama_departemen.unique' => 'Nama departemen sudah ada dalam database. Silakan gunakan nama yang berbeda.',
         ]);
 
         $department->update($request->all());
 
-        return redirect()->route('departments.index');
+        return redirect()->route('departments.index')->with('success', 'Departemen berhasil diperbarui');
     }
 
     public function destroy(Department $department)

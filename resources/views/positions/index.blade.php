@@ -26,7 +26,7 @@
     <table class="simple-table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th width="80">No</th>
                 <th>Nama Jabatan</th>
                 <th>Gaji Pokok</th>
                 <th>Aksi</th>
@@ -35,7 +35,7 @@
         <tbody>
             @foreach ($positions as $position)
                 <tr>
-                    <td>{{ $position->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $position->nama_jabatan }}</td>
                     <td>Rp {{ number_format($position->gaji_pokok, 2, ',', '.') }}</td>
                     <td class="action-links">
