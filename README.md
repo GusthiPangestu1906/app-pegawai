@@ -14,7 +14,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/380px-Laravel.svg.png" alt="Laravel 12">
 </a>
 <a href="https://tailwindcss.com">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Tailwind_CSS-38B2AC%3Fstyle%3Dfor-the-badge%26logo%3Dtailwind-css%26logoColor%3Dwhite" alt="Tailwind CSS">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tailwind_CSS_logo_with_dark_text.svg/1024px-Tailwind_CSS_logo_with_dark_text.svg.png" alt="Tailwind CSS">
 </a>
 <a href="https://php.net">
 <img src="https://www.google.com/search?q=https://img.shields.io/badge/PHP-777BB4%3Fstyle%3Dfor-the-badge%26logo%3Dphp%26logoColor%3Dwhite" alt="PHP">
