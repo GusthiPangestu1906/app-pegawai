@@ -1,116 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pegawai</title>
-    <style>
-        /* Gaya dasar halaman */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
+@extends('layouts.admin')
 
-        /* Kontainer utama */
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+@section('title', 'Detail Pegawai')
 
-        /* Judul Halaman */
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
+@section('content')
+    <div class="max-w-4xl mx-auto">
+        <!-- Header & Tombol Kembali -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Detail Pegawai</h2>
+            <a href="{{ route('employees.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+            </a>
+        </div>
 
-        /* Gaya Tabel Detail */
-        .detail-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <!-- Cover / Header Profil -->
+            <div class="bg-blue-600 p-6 text-white flex items-center gap-6">
+                <div class="h-24 w-24 rounded-full bg-white text-blue-600 flex items-center justify-center text-3xl font-bold shadow-lg">
+                    {{ substr($employee->name, 0, 1) }}
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold">{{ $employee->name }}</h3>
+                    <p class="opacity-90">{{ $employee->email }}</p>
+                    <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-blue-500 bg-opacity-50 text-sm border border-blue-400">
+                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2"></span> Active Employee
+                    </div>
+                </div>
+            </div>
 
-        .detail-table th,
-        .detail-table td {
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            text-align: left;
-        }
+            <!-- Informasi Detail -->
+            <div class="p-8">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Informasi Pribadi & Pekerjaan</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Nama Lengkap</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg">{{ $employee->name }}</p>
+                    </div>
 
-        .detail-table th {
-            background-color: #f8f8f8;
-            font-weight: 600;
-            color: #555;
-            width: 35%; /* Mengatur lebar kolom label */
-        }
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Email</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg">{{ $employee->email }}</p>
+                    </div>
 
-        .detail-table tr:nth-child(even) { /* Warna latar untuk baris genap */
-            background-color: #fdfdfd;
-        }
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Departemen</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-building text-gray-400"></i>
+                            {{ $employee->department->name ?? '-' }}
+                        </p>
+                    </div>
 
-        /* Gaya tombol kembali */
-        .back-link {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 10px 20px;
-            background-color: #6c757d;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Jabatan</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-briefcase text-gray-400"></i>
+                            {{ $employee->position->title ?? '-' }}
+                        </p>
+                    </div>
 
-        .back-link:hover {
-            background-color: #5a6268;
-        }
-    </style>
-</head>
-<body>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Tanggal Lahir</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg">
+                            {{ $employee->birth_date ? \Carbon\Carbon::parse($employee->birth_date)->translatedFormat('d F Y') : '-' }}
+                        </p>
+                    </div>
 
-    <div class="container">
-        <h1>Detail Pegawai</h1>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500">Bergabung Sejak</label>
+                        <p class="mt-1 text-gray-900 font-medium text-lg">
+                            {{ $employee->created_at->translatedFormat('d F Y') }}
+                        </p>
+                    </div>
+                </div>
 
-        <table class="detail-table">
-            <tr>
-                <th>Nama Lengkap</th>
-                <td>{{ $employee->nama_lengkap }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ $employee->email }}</td>
-            </tr>
-            <tr>
-                <th>Nomor Telepon</th>
-                <td>{{ $employee->nomor_telepon }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Lahir</th>
-                <td>{{ $employee->tanggal_lahir }}</td>
-            </tr>
-            <tr>
-                <th>Alamat</th>
-                <td>{{ $employee->alamat }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Masuk</th>
-                <td>{{ $employee->tanggal_masuk }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ $employee->status }}</td>
-            </tr>
-        </table>
-
-        <a href="{{ route('employees.index') }}" class="back-link">Kembali ke Daftar Pegawai</a>
+                <!-- Action Buttons -->
+                <div class="mt-8 pt-6 border-t flex gap-3">
+                    <a href="{{ route('employees.edit', $employee->id) }}" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Edit Data
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-</body>
-</html>
+@endsection

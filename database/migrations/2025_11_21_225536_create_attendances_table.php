@@ -6,22 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('salaries', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            // Menghubungkan kolom user_id dengan tabel users
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('base_salary', 15, 2);
-            $table->decimal('allowance', 15, 2)->default(0);
-            $table->decimal('bonus', 15, 2)->default(0);
-            $table->decimal('deduction', 15, 2)->default(0);
-            $table->date('payment_date');
+            $table->date('date');
+            $table->time('clock_in');
+            $table->time('clock_out')->nullable();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('salaries');
+        Schema::dropIfExists('attendances');
     }
 };

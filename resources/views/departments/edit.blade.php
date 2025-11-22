@@ -1,98 +1,33 @@
-@extends('master')
+@extends('layouts.admin')
 
 @section('title', 'Edit Departemen')
-@section('page-title', 'Edit Departemen')
 
 @section('content')
-<style>
-    :root{
-        --bg: #ffffff;
-        --primary: #0d6efd;
-        --primary-dark: #0b5ed7;
-        --input-border: #ccc;
-        --radius: 8px;
-        --radius-sm: 6px;
-        --gap: 20px;
-        --pad: 12px;
-    }
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800">Edit Departemen</h2>
+            </div>
 
-    *, *::before, *::after { box-sizing: border-box; }
+            <form action="{{ route('departments.update', $department->id) }}" method="POST" class="p-6">
+                @csrf
+                @method('PUT')
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Departemen</label>
+                    <input type="text" name="name" value="{{ old('name', $department->name) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" required>
+                </div>
 
-    .form-container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 30px;
-        background: var(--bg);
-        border-radius: var(--radius);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
+                    <textarea name="description" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">{{ old('description', $department->description) }}</textarea>
+                </div>
 
-    .form-group { margin-bottom: var(--gap); }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"],
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: var(--pad);
-        border: 1px solid var(--input-border);
-        border-radius: var(--radius-sm);
-        background: transparent;
-        font: inherit;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(13,110,253,0.12);
-    }
-
-    .btn-submit {
-        display: block;
-        width: 100%;
-        padding: var(--pad);
-        background: var(--primary);
-        color: #fff;
-        border: none;
-        border-radius: var(--radius-sm);
-        font-size: 16px;
-        cursor: pointer;
-        transition: background .15s ease, transform .06s ease, box-shadow .12s ease;
-    }
-
-    .btn-submit:hover { background: var(--primary-dark); }
-    .btn-submit:active { transform: translateY(1px); }
-    .btn-submit:focus { box-shadow: 0 0 0 3px rgba(13,110,253,0.18); }
-</style>
-
-<div class="form-container">
-    @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;">
-            <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+                <div class="flex justify-end gap-3">
+                    <a href="{{ route('departments.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">Batal</a>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-sm">Update</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <form action="{{ route('departments.update', $department->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <label for="nama_departemen">Nama Departemen</label>
-            <input type="text" id="nama_departemen" name="nama_departemen" value="{{ $department->nama_departemen }}" required>
-        </div>
-        <button type="submit" class="btn-submit">Update</button>
-    </form>
-</div>
+    </div>
 @endsection

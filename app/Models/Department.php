@@ -9,12 +9,19 @@ class Department extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'nama_departemen',
+        'name',
+        'description',
     ];
+
+    // Relasi: Departemen punya banyak Jabatan
+    public function positions()
+    {
+        return $this->hasMany(Position::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

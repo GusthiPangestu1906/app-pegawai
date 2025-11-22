@@ -1,39 +1,47 @@
-@extends('master')
+@extends('layouts.admin')
 
 @section('title', 'Tambah Jabatan')
-@section('page-title', 'Tambah Jabatan')
 
 @section('content')
-<style>
-    .form-container { max-width: 600px; margin: auto; padding: 30px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
-    .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-    .btn-submit { display: block; width: 100%; padding: 12px; background-color: #0d6efd; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
-</style>
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800">Buat Jabatan Baru</h2>
+                <p class="text-sm text-gray-500">Tentukan departemen dan nama jabatan.</p>
+            </div>
 
-<div class="form-container">
-    @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;">
-            <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <form action="{{ route('positions.store') }}" method="POST" class="p-6">
+                @csrf
+                
+                <!-- Pilih Departemen -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Departemen</label>
+                    <select name="department_id" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition bg-white" required>
+                        <option value="">-- Pilih Departemen --</option>
+                        @foreach($departments as $dept)
+                            <option value="{{ $dept->id }}">{{ $dept->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-    <form action="{{ route('positions.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="nama_jabatan">Nama Jabatan</label>
-            <input type="text" id="nama_jabatan" name="nama_jabatan" value="{{ old('nama_jabatan') }}" required>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Jabatan</label>
+                    <input type="text" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition" placeholder="Contoh: Senior Developer" required>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Gaji Dasar</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-2 text-gray-500">Rp</span>
+                        <input type="number" name="basic_salary" class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition" placeholder="0" required>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <a href="{{ route('positions.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">Batal</a>
+                    <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition shadow-sm">Simpan</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="gaji_pokok">Gaji Pokok</label>
-            <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" step="1000" required>
-        </div>
-        <button type="submit" class="btn-submit">Simpan</button>
-    </form>
-</div>
+    </div>
 @endsection

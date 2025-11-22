@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'department_id',
+        'position_id',
+        'birth_date',
     ];
 
     /**
@@ -44,5 +48,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // --- ADD THESE RELATIONSHIPS ---
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
+
+    // Helper for checking role
+    public function hasRole($role)
+    {
+        return $this->role === $role;
     }
 }

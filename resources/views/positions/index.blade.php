@@ -1,54 +1,60 @@
-@extends('master')
+@extends('layouts.admin')
 
-@section('title', 'Daftar Jabatan')
-@section('page-title', 'Manajemen Jabatan')
+@section('title', 'Manajemen Jabatan')
 
 @section('content')
-<style>
-    .table-container { padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .table-header h2 { margin: 0; font-size: 22px; }
-    .btn-add { padding: 8px 15px; background-color: #0d6efd; color: white; text-decoration: none; border-radius: 5px; font-weight: 500; }
-    .simple-table { width: 100%; border-collapse: collapse; }
-    .simple-table th, .simple-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
-    .simple-table thead th { background-color: #f8f9fa; font-weight: 600; color: #495057; }
-    .action-links a, .action-links button { color: #0d6efd; text-decoration: none; margin-right: 10px; }
-    .action-links button { background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; font-size: 1em; }
-    .action-links button.delete { color: #dc3545; }
-</style>
-
-<div class="table-container">
-    <div class="table-header">
-        <h2>Data Jabatan</h2>
-        <a href="{{ route('positions.create') }}" class="btn-add">Tambah Data</a>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Data Jabatan</h2>
+        <a href="{{ route('positions.create') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> Tambah Jabatan
+        </a>
     </div>
 
-    <table class="simple-table">
-        <thead>
-            <tr>
-                <th width="80">No</th>
-                <th>Nama Jabatan</th>
-                <th>Gaji Pokok</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($positions as $position)
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-50 border-b border-gray-200">
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $position->nama_jabatan }}</td>
-                    <td>Rp {{ number_format($position->gaji_pokok, 2, ',', '.') }}</td>
-                    <td class="action-links">
-                        <a href="{{ route('positions.edit', $position->id) }}">Edit</a>
-                        <form action="{{ route('positions.destroy', $position->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="delete" onclick="return confirm('Yakin?')">Delete</button>
-                        </form>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-16">No</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Departemen</th> <!-- Kolom Baru -->
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Nama Jabatan</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Gaji Dasar</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse($positions as $position)
+                <tr class="hover:bg-purple-50 transition duration-150">
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                        <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-md text-xs font-bold">
+                            {{ $position->department->name ?? 'Deleted' }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $position->title }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">Rp {{ number_format($position->basic_salary ?? 0, 0, ',', '.') }}</td>
+                    <td class="px-6 py-4 text-right text-sm font-medium">
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ route('positions.edit', $position->id) }}" class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 p-2 rounded transition" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <form action="{{ route('positions.destroy', $position->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus jabatan ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded transition" title="Hapus">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                        Belum ada data jabatan.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection

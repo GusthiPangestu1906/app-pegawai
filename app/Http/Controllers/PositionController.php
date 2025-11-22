@@ -3,57 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Position;
+use App\Models\Department; // Pastikan Model Department di-import
 use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
     public function index()
     {
-        $positions = Position::orderBy('created_at', 'asc')->paginate(10);
+        // Ambil data jabatan beserta info departemennya (eager loading)
+        $positions = Position::with('department')->get();
         return view('positions.index', compact('positions'));
     }
 
+    // --- PERBAIKAN DI SINI ---
     public function create()
     {
-        return view('positions.create');
+        // Ambil semua departemen untuk dropdown
+        $departments = Department::all(); 
+        
+        // Kirim variabel $departments ke view
+        return view('positions.create', compact('departments'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_jabatan' => 'required|string|max:100|unique:positions,nama_jabatan',
-            'gaji_pokok' => 'required|numeric|min:0',
-        ], [
-            'nama_jabatan.unique' => 'Nama jabatan sudah ada dalam database. Silakan gunakan nama yang berbeda.',
+            'department_id' => 'required|exists:departments,id',
+            'title' => 'required|string|max:255',
+            'basic_salary' => 'required|numeric',
         ]);
 
         Position::create($request->all());
 
-        return redirect()->route('positions.index');
+        return redirect()->route('positions.index')->with('success', 'Jabatan berhasil ditambahkan.');
     }
 
+    // --- PERBAIKAN DI SINI JUGA ---
     public function edit(Position $position)
     {
-        return view('positions.edit', compact('position'));
+        // Saat edit, kita juga butuh daftar departemen untuk dropdown
+        $departments = Department::all();
+        
+        return view('positions.edit', compact('position', 'departments'));
     }
 
     public function update(Request $request, Position $position)
     {
         $request->validate([
-            'nama_jabatan' => 'required|string|max:100|unique:positions,nama_jabatan,'.$position->id,
-            'gaji_pokok' => 'required|numeric|min:0',
-        ], [
-            'nama_jabatan.unique' => 'Nama jabatan sudah ada dalam database. Silakan gunakan nama yang berbeda.',
+            'department_id' => 'required|exists:departments,id',
+            'title' => 'required|string|max:255',
+            'basic_salary' => 'required|numeric',
         ]);
 
         $position->update($request->all());
 
-        return redirect()->route('positions.index');
+        return redirect()->route('positions.index')->with('success', 'Jabatan berhasil diperbarui.');
     }
 
     public function destroy(Position $position)
     {
         $position->delete();
-        return redirect()->route('positions.index');
+        return redirect()->route('positions.index')->with('success', 'Jabatan dihapus.');
+    }
+    
+    public function show(Position $position)
+    {
+        return view('positions.show', compact('position'));
     }
 }

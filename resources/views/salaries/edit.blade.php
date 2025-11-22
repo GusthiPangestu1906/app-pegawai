@@ -1,48 +1,62 @@
-@extends('master')
+@extends('layouts.admin')
+
 @section('title', 'Edit Gaji')
-@section('page-title', 'Edit Data Gaji')
 
 @section('content')
-<style>
-    .form-container { max-width: 600px; margin: auto; padding: 30px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
-    .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-    .btn-submit { display: block; width: 100%; padding: 12px; background-color: #0d6efd; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
-</style>
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800">Edit Data Gaji</h2>
+                <p class="text-sm text-gray-500">Pegawai: <strong>{{ $salary->employee->name ?? 'Unknown' }}</strong></p>
+            </div>
 
-<div class="form-container">
-    <form action="{{ route('salaries.update', $salary->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <label for="employee_id">Nama Pegawai</label>
-            <select name="employee_id" id="employee_id" required>
-                <option value="">-- Pilih Pegawai --</option>
-                @foreach($employees as $employee)
-                    <option value="{{ $employee->id }}" {{ $salary->employee_id == $employee->id ? 'selected' : '' }}>
-                        {{ $employee->nama_lengkap }}
-                    </option>
-                @endforeach
-            </select>
+            <form action="{{ route('salaries.update', $salary->id) }}" method="POST" class="p-6">
+                @csrf
+                @method('PUT')
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Gaji Pokok -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Gaji Pokok</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2 text-gray-500">Rp</span>
+                            <input type="number" name="base_salary" value="{{ old('base_salary', $salary->base_salary) }}" class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" required>
+                        </div>
+                    </div>
+
+                    <!-- Tunjangan -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tunjangan</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2 text-gray-500">Rp</span>
+                            <input type="number" name="allowance" value="{{ old('allowance', $salary->allowance) }}" class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition">
+                        </div>
+                    </div>
+
+                    <!-- Bonus -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bonus</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2 text-gray-500">Rp</span>
+                            <input type="number" name="bonus" value="{{ old('bonus', $salary->bonus) }}" class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition">
+                        </div>
+                    </div>
+
+                    <!-- Potongan -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Potongan</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2 text-gray-500">Rp</span>
+                            <input type="number" name="deduction" value="{{ old('deduction', $salary->deduction) }}" class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <a href="{{ route('salaries.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">Batal</a>
+                    <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-sm">Update Gaji</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="bulan">Bulan (Contoh: 2025-10)</label>
-            <input type="text" name="bulan" id="bulan" value="{{ $salary->bulan }}" required>
-        </div>
-        <div class="form-group">
-            <label for="gaji_pokok">Gaji Pokok</label>
-            <input type="number" name="gaji_pokok" id="gaji_pokok" value="{{ (int)$salary->gaji_pokok }}" step="1000" required>
-        </div>
-        <div class="form-group">
-            <label for="tunjangan">Tunjangan</label>
-            <input type="number" name="tunjangan" id="tunjangan" value="{{ (int)$salary->tunjangan }}" step="1000">
-        </div>
-        <div class="form-group">
-            <label for="potongan">Potongan</label>
-            <input type="number" name="potongan" id="potongan" value="{{ (int)$salary->potongan }}" step="1000">
-        </div>
-        <button type="submit" class="btn-submit">Update Data</button>
-    </form>
-</div>
+    </div>
 @endsection

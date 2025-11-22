@@ -1,139 +1,114 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\User;
+use App\Models\Position; // Kita tidak butuh model Department lagi disini untuk dropdown
 use Illuminate\Http\Request;
-use App\Models\Department;
-use App\Models\Position;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
-    public function index(Request $request) {
-        $search = $request->input('search');
+    // Tampilkan Daftar Pegawai
+    public function index(Request $request)
+    {
+        $query = User::where('role', 'employee')->with(['department', 'position']);
 
-        $query = Employee::with(['department', 'position']);
-
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_lengkap', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhereHas('department', function ($dq) use ($search) {
-                      $dq->where('nama_departemen', 'like', "%{$search}%");
-                  })
-                  ->orWhereHas('position', function ($pq) use ($search) {
-                      $pq->where('nama_jabatan', 'like', "%{$search}%");
-                  });
-            });
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $employees = $query->latest()->paginate(10)->withQueryString();
-
+        $employees = $query->latest()->get();
         return view('employees.index', compact('employees'));
     }
 
+    // Tampilkan Form Tambah
     public function create()
     {
-        $departments = Department::all();
-        $positions = Position::all();
-
-        return view('employees.create', compact('departments', 'positions'));
+        // Ambil jabatan beserta departemennya untuk ditampilkan di dropdown
+        // Contoh tampilan nanti: "Senior Dev - IT", "Staff Admin - HRD"
+        $positions = Position::with('department')->get();
+        
+        return view('employees.create', compact('positions'));
     }
 
-    public function store(Request $request) {
-    $request->validate([
-        'nama_lengkap'  => 'required|string|max:255',
-        'email'         => 'required|email|max:255',
-        'nomor_telepon' => 'required|string|max:20',
-        'tanggal_lahir' => 'required|date',
-        'alamat'        => 'required|string|max:255',
-        'tanggal_masuk' => 'required|date',
-        'status'        => 'required|string|max:50',
-        'departemen_id' => 'required|exists:departments,id',
-        'jabatan_id'    => 'required|exists:positions,id',
-    ]);
-
-    // Normalisasi nilai status agar cocok dengan enum di database
-    $rawStatus = trim($request->input('status'));
-    $map = [
-        'aktif' => 'aktif',
-        'nonaktif' => 'nonaktif',
-        'non-aktif' => 'nonaktif',
-        'tidak aktif' => 'nonaktif',
-        'tidakaktif' => 'nonaktif',
-        'cuti' => 'cuti',
-    ];
-
-    $lower = mb_strtolower($rawStatus);
-    $normalized = $map[$lower] ?? $lower;
-
-    // Pastikan nilai yang dinormalisasi valid untuk enum
-    if (! in_array($normalized, ['aktif','nonaktif','cuti'], true)) {
-        return redirect()->back()->withInput()->with('error', 'Nilai status tidak valid. Pilih: Aktif, Non-Aktif, atau Cuti.');
-    }
-
-    $data = $request->all();
-    $data['status'] = $normalized;
-
-    Employee::create($data);
-
-    return redirect()->route('employees.index')->with('success', 'Pegawai berhasil ditambahkan');
-    }
-
-    public function show(Employee $employee) {
-        return view('employees.show', compact('employee'));
-    }
-
-    public function edit(string $id) {
-        $employee = Employee::find($id);
-        // ambil daftar departemen dan jabatan untuk select di form edit
-        $departments = Department::all();
-        $positions = Position::all();
-
-        return view('employees.edit', compact('employee', 'departments', 'positions'));
-    }
-
-    public function update(Request $request, string $id) {
+    // PROSES SIMPAN DATA BARU
+    public function store(Request $request)
+    {
         $request->validate([
-            'nama_lengkap'  => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
-            'nomor_telepon' => 'required|string|max:20',
-            'tanggal_lahir' => 'required|date',
-            'alamat'        => 'required|string|max:255',
-            'tanggal_masuk' => 'required|date',
-            'status'        => 'required|string|max:50',
-            'departemen_id' => 'required|exists:departments,id',
-            'jabatan_id'    => 'required|exists:positions,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'position_id' => 'required|exists:positions,id', // Wajib pilih jabatan
+            'birth_date' => 'nullable|date',
         ]);
 
-        // Normalisasi status seperti pada store
-        $rawStatus = trim($request->input('status'));
-        $map = [
-            'aktif' => 'aktif',
-            'nonaktif' => 'nonaktif',
-            'non-aktif' => 'nonaktif',
-            'tidak aktif' => 'nonaktif',
-            'tidakaktif' => 'nonaktif',
-            'cuti' => 'cuti',
-        ];
-        $lower = mb_strtolower($rawStatus);
-        $normalized = $map[$lower] ?? $lower;
+        // Cari data jabatan yang dipilih untuk mendapatkan department_id-nya
+        $position = Position::findOrFail($request->position_id);
 
-        if (! in_array($normalized, ['aktif','nonaktif','cuti'], true)) {
-            return redirect()->back()->withInput()->with('error', 'Nilai status tidak valid. Pilih: Aktif, Non-Aktif, atau Cuti.');
-        }
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'employee',
+            'position_id' => $request->position_id,
+            'department_id' => $position->department_id, // <--- OTOMATIS DISI DARI POSISI
+            'birth_date' => $request->birth_date,
+        ]);
 
-        $employee = Employee::findOrFail($id);
-        $data = $request->all();
-        $data['status'] = $normalized;
-        $employee->update($data);
-
-        return redirect()->route('employees.index')->with('success', 'Pegawai berhasil diperbarui');
+        return redirect()->route('employees.index')->with('success', 'Pegawai berhasil ditambahkan.');
     }
 
-    public function destroy(string $id) {
-        $employee = Employee::find($id);
-        $employee->delete();
+    // Tampilkan Form Edit
+    public function edit($id)
+    {
+        $employee = User::findOrFail($id);
+        $positions = Position::with('department')->get();
+        
+        return view('employees.edit', compact('employee', 'positions'));
+    }
 
-        return redirect()->route('employees.index');
+    // PROSES UPDATE DATA
+    public function update(Request $request, $id)
+    {
+        $employee = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'position_id' => 'required|exists:positions,id',
+        ]);
+
+        // Cari data jabatan baru (jika berubah)
+        $position = Position::findOrFail($request->position_id);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'position_id' => $request->position_id,
+            'department_id' => $position->department_id, // <--- UPDATE OTOMATIS
+            'birth_date' => $request->birth_date,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $employee->update($data);
+
+        return redirect()->route('employees.index')->with('success', 'Data pegawai berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $employee = User::findOrFail($id);
+        $employee->delete();
+        return redirect()->route('employees.index')->with('success', 'Pegawai berhasil dihapus.');
+    }
+    
+    public function show($id)
+    {
+        $employee = User::findOrFail($id);
+        return view('employees.show', compact('employee'));
     }
 }

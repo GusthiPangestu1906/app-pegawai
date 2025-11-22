@@ -4,23 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Position extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama_jabatan',
-        'gaji_pokok',
+        'department_id', // Tambahkan ini
+        'title',
+        'basic_salary',
     ];
 
-    /**
-     * Mendefinisikan relasi "hasMany" (memiliki banyak).
-     * Satu Jabatan bisa memiliki banyak Pegawai.
-     */
-    public function employees(): HasMany
+    // Relasi: Jabatan milik satu Departemen
+    public function department()
     {
-        return $this->hasMany(Employee::class, 'jabatan_id');
+        return $this->belongsTo(Department::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }

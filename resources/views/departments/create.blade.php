@@ -1,107 +1,31 @@
-@extends('master')
+@extends('layouts.admin')
 
 @section('title', 'Tambah Departemen')
-@section('page-title', 'Tambah Departemen')
 
 @section('content')
-<style>
-    :root {
-        --max-width: 600px;
-        --padding: 30px;
-        --bg: #ffffff;
-        --card-radius: 8px;
-        --shadow: 0 4px 10px rgba(0,0,0,0.1);
-        --border: #ccc;
-        --primary: #0d6efd;
-        --text-white: #ffffff;
-        --input-padding: 12px;
-        --btn-font-size: 16px;
-    }
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800">Buat Departemen Baru</h2>
+            </div>
 
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
+            <form action="{{ route('departments.store') }}" method="POST" class="p-6">
+                @csrf
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Departemen</label>
+                    <input type="text" name="name" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="Contoh: IT, HRD, Marketing" required>
+                </div>
 
-    .form-container {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: var(--padding);
-        background: var(--bg);
-        border-radius: var(--card-radius);
-        box-shadow: var(--shadow);
-    }
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi <span class="text-gray-400 font-normal">(Opsional)</span></label>
+                    <textarea name="description" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="Jelaskan fungsi departemen ini..."></textarea>
+                </div>
 
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: var(--input-padding);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        font: inherit;
-    }
-
-    .form-group input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(13,110,253,0.12);
-    }
-
-    .btn-submit {
-        display: block;
-        width: 100%;
-        padding: var(--input-padding);
-        background-color: var(--primary);
-        color: var(--text-white);
-        border: none;
-        border-radius: 6px;
-        font-size: var(--btn-font-size);
-        cursor: pointer;
-    }
-
-    .btn-submit:hover {
-        filter: brightness(0.95);
-    }
-
-    @media (max-width: 480px) {
-        .form-container {
-            padding: 20px;
-        }
-    }
-</style>
-
-<div class="form-container">
-    @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;">
-            <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+                <div class="flex justify-end gap-3">
+                    <a href="{{ route('departments.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">Batal</a>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-sm">Simpan</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    @if(session('success'))
-        <div class="alert alert-success" style="margin-bottom: 20px; padding: 15px; border-radius: 4px; background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724;">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <form action="{{ route('departments.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="nama_departemen">Nama Departemen</label>
-            <input type="text" id="nama_departemen" name="nama_departemen" value="{{ old('nama_departemen') }}" required placeholder="Masukkan Nama Departemen">
-        </div>
-        <button type="submit" class="btn-submit">Simpan</button>
-    </form>
-</div>
+    </div>
 @endsection

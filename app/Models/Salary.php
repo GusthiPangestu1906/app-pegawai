@@ -4,25 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Salary extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'employee_id',
-        'bulan',
-        'gaji_pokok',
-        'tunjangan',
-        'potongan',
+        'user_id',      // <--- MAKE SURE THIS IS HERE
+        'base_salary',
+        'allowance',
+        'bonus',
+        'deduction',
+        'payment_date',
     ];
 
-    /**
-     * Mendefinisikan relasi "milik" ke model Employee.
-     */
-    public function employee(): BelongsTo
+    public function employee()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
