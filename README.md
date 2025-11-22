@@ -1,31 +1,9 @@
 <p align="center">
-<a href="https://laravel.com" target="_blank">
-<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-</a>
-</p>
-
-<p align="center">
 <h1 align="center">Sistem Informasi Manajemen Kepegawaian (HR System)</h1>
 </p>
 
-<p align="center">
-<!-- Perhatikan: Link di bawah ini langsung ke shields.io, TIDAK ADA https://www.google.com/search?q=google.com -->
-<a href="https://laravel.com">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/380px-Laravel.svg.png" alt="Laravel 12">
-</a>
-<a href="https://tailwindcss.com">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tailwind_CSS_logo_with_dark_text.svg/1024px-Tailwind_CSS_logo_with_dark_text.svg.png" alt="Tailwind CSS">
-</a>
-<a href="https://php.net">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1422px-PHP-logo.svg.png" alt="PHP">
-</a>
-</p>
-
-<p align="center">
-<strong>Dibuat oleh:</strong> Gusthi Pangestu &nbsp;•&nbsp;
-<strong>NRP:</strong> 3124600098 &nbsp;•&nbsp;
-<strong>Kelas:</strong> D4 IT D
-</p>
+📘 Sistem Informasi Manajemen Kepegawaian (HR System)
+<p align="center"> <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo"> </p> <p align="center"> <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"></a> <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"></a> <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"></a> <img src="https://img.shields.io/badge/License-MIT-45b848?style=for-the-badge"> </p> <p align="center"> <strong>Dibuat oleh:</strong> Gusthi Pangestu • <strong>NRP:</strong> 3124600098 • <strong>Kelas:</strong> D4 IT D </p>
 
 📖 Tentang Aplikasi
 
