@@ -2,16 +2,15 @@
 <h1 align="center">Sistem Informasi Manajemen Kepegawaian (HR System)</h1>
 </p>
 
-📘 Sistem Informasi Manajemen Kepegawaian (HR System)
 <p align="center"> <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo"> </p> <p align="center"> <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"></a> <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"></a> <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"></a> <img src="https://img.shields.io/badge/License-MIT-45b848?style=for-the-badge"> </p> <p align="center"> <strong>Dibuat oleh:</strong> Gusthi Pangestu | <strong>NRP:</strong> 3124600098 | <strong>Kelas:</strong> D4 IT D </p>
 
-📖 Tentang Aplikasi
+<h1 align="center">📖 Tentang Aplikasi</h1>
 
 HR System adalah aplikasi manajemen Sumber Daya Manusia (SDM) berbasis web modern yang dirancang untuk menyederhanakan proses administrasi perusahaan. Aplikasi ini menangani pengelolaan data pegawai, struktur organisasi (departemen & jabatan), penggajian otomatis, serta sistem presensi harian yang real-time.
 
 Dibangun di atas fondasi Laravel 12 yang kuat dan antarmuka Tailwind CSS yang responsif, aplikasi ini menawarkan pengalaman pengguna yang cepat, aman, dan nyaman.
 
-🌟 Fitur Unggulan
+<h1 align="center">🌟 Fitur Unggulan</h1>
 
 1. Portal Pegawai (Self-Service)
 
