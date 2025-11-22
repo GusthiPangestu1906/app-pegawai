@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            // Menghubungkan kolom user_id dengan tabel users
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->time('clock_in');
+            $table->time('clock_in')->nullable();  // Buat nullable agar fleksibel
             $table->time('clock_out')->nullable();
+            $table->enum('status', ['present', 'sick', 'permission'])->default('present'); // Kolom Status
+            $table->text('note')->nullable(); // Kolom Keterangan
             $table->timestamps();
         });
     }

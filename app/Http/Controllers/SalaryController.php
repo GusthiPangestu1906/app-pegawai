@@ -16,8 +16,12 @@ class SalaryController extends Controller
 
     public function create()
     {
-        // Ambil hanya user dengan role employee
-        $employees = User::where('role', 'employee')->get();
+        // Ambil user role employee yang BELUM punya data gaji
+        // Agar dropdown bersih, hanya menampilkan pegawai yang belum digaji
+        $employees = User::where('role', 'employee')
+                         ->whereDoesntHave('salary') 
+                         ->get();
+                         
         return view('salaries.create', compact('employees'));
     }
 
@@ -25,8 +29,11 @@ class SalaryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            // Tambahkan 'unique:salaries,user_id'
+            'user_id' => 'required|exists:users,id|unique:salaries,user_id',
             'base_salary' => 'required|numeric',
+        ], [
+            'user_id.unique' => 'Pegawai ini sudah memiliki data gaji! Silakan edit data yang ada.',
         ]);
 
         Salary::create([

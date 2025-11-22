@@ -6,23 +6,31 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Position;
-use App\Models\employee;
-use App\Models\Salary;
-// Jika Anda sudah punya Model lain (Employee, Department, dll), import di sini.
-// Untuk sementara kita pakai User sebagai contoh data statistik.
+use App\Models\Attendance;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        // Contoh data statistik dummy (nanti diganti dengan data real dari database)
+        $today = Carbon::today();
+
+        // 1. STATISTIK KARTU
         $stats = [
             'employees' => User::where('role', 'employee')->count(),
-            'departments' => 5, // Contoh static
-            'positions' => 12,  // Contoh static
-            'salaries' => 'Rp 150M' // Contoh static
+            'departments' => Department::count(),
+            'positions' => Position::count(),
+            'present_today' => Attendance::where('date', $today)->where('status', 'present')->count(),
+            'absent_today' => Attendance::where('date', $today)->whereIn('status', ['sick', 'permission'])->count(),
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        // 2. LOG AKTIVITAS TERBARU (Tabel)
+        $recent_attendances = Attendance::with('user')
+                                        ->where('date', $today)
+                                        ->orderBy('updated_at', 'desc')
+                                        ->take(5)
+                                        ->get();
+
+        return view('admin.dashboard', compact('stats', 'recent_attendances'));
     }
 }

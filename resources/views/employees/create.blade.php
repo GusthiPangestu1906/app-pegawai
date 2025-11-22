@@ -3,7 +3,24 @@
 @section('title', 'Tambah Pegawai')
 
 @section('content')
+
     <div class="max-w-4xl mx-auto">
+        <!-- --- TAMBAHKAN BLOK ERROR INI --- -->
+        @if ($errors->any())
+            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3 class="font-bold">Gagal Menyimpan!</h3>
+                </div>
+                <ul class="list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <!-- -------------------------------- -->
+
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
             <div class="p-6 border-b border-gray-100 bg-gray-50">
                 <h2 class="text-lg font-bold text-gray-800">Form Tambah Pegawai</h2>

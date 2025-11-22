@@ -16,7 +16,7 @@
                 <i class="fa-solid fa-users text-3xl text-blue-600"></i>
             </div>
             <h2 class="text-2xl font-bold text-white">Portal Pegawai</h2>
-            <p class="text-blue-100 text-sm">Masuk menggunakan identitas Anda</p>
+            <p class="text-blue-100 text-sm">Masuk menggunakan Email terdaftar</p>
         </div>
 
         <!-- Form -->
@@ -34,16 +34,16 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 
-                <!-- Input Nama -->
+                <!-- Input Email (Pengganti Nama) -->
                 <div class="mb-5">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Alamat Email</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-envelope"></i>
                         </span>
-                        <input type="text" name="name" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="Sesuai data HR..." required autofocus>
+                        <input type="email" name="email" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="nama@perusahaan.com" required autofocus>
                     </div>
-                    <p class="text-xs text-gray-400 mt-1">*Pastikan nama sesuai dengan data pendaftaran.</p>
+                    <p class="text-xs text-gray-400 mt-1">*Gunakan email yang didaftarkan HR.</p>
                 </div>
 
                 <!-- Input Jabatan -->
@@ -73,8 +73,13 @@
             </form>
         </div>
         
-        <div class="bg-gray-50 p-4 text-center text-xs text-gray-500">
-            &copy; 2025 HR Management System
+        <div class="bg-gray-50 p-4 text-center flex justify-between items-center px-8">
+            <span class="text-xs text-gray-500">&copy; 2025 HR System</span>
+            
+            <!-- Link ke Login Admin -->
+            <a href="{{ route('admin.login') }}" class="text-xs text-gray-400 hover:text-blue-600 flex items-center gap-1 transition">
+                <i class="fa-solid fa-lock"></i> Admin Login
+            </a>
         </div>
     </div>
 

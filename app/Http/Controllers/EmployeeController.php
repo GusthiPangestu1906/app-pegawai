@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Position; // Kita tidak butuh model Department lagi disini untuk dropdown
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,10 +25,7 @@ class EmployeeController extends Controller
     // Tampilkan Form Tambah
     public function create()
     {
-        // Ambil jabatan beserta departemennya untuk ditampilkan di dropdown
-        // Contoh tampilan nanti: "Senior Dev - IT", "Staff Admin - HRD"
         $positions = Position::with('department')->get();
-        
         return view('employees.create', compact('positions'));
     }
 
@@ -36,14 +33,20 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            // Tambahkan 'unique:users,name' agar nama tidak boleh sama
+            'name' => 'required|string|max:255|unique:users,name',
+            // Email sudah unik dari awal, tapi kita pastikan lagi
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
-            'position_id' => 'required|exists:positions,id', // Wajib pilih jabatan
+            'position_id' => 'required|exists:positions,id',
             'birth_date' => 'nullable|date',
+        ], [
+            // Pesan Error Kustom Bahasa Indonesia
+            'name.unique' => 'Nama pegawai ini sudah terdaftar! Harap gunakan nama lain atau tambahkan inisial.',
+            'email.unique' => 'Alamat email ini sudah digunakan oleh pegawai lain.',
         ]);
 
-        // Cari data jabatan yang dipilih untuk mendapatkan department_id-nya
+        // Cari data jabatan untuk mengisi department_id otomatis
         $position = Position::findOrFail($request->position_id);
 
         User::create([
@@ -52,7 +55,7 @@ class EmployeeController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'employee',
             'position_id' => $request->position_id,
-            'department_id' => $position->department_id, // <--- OTOMATIS DISI DARI POSISI
+            'department_id' => $position->department_id,
             'birth_date' => $request->birth_date,
         ]);
 
@@ -74,19 +77,22 @@ class EmployeeController extends Controller
         $employee = User::findOrFail($id);
 
         $request->validate([
-            'name' => 'required',
+            // Validasi unik dengan pengecualian ID sendiri (agar tidak error jika nama tidak diubah)
+            'name' => 'required|string|max:255|unique:users,name,' . $id,
             'email' => 'required|email|unique:users,email,' . $id,
             'position_id' => 'required|exists:positions,id',
+        ], [
+            'name.unique' => 'Nama pegawai ini sudah terdaftar! Harap gunakan nama lain.',
+            'email.unique' => 'Alamat email ini sudah digunakan oleh pegawai lain.',
         ]);
 
-        // Cari data jabatan baru (jika berubah)
         $position = Position::findOrFail($request->position_id);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
             'position_id' => $request->position_id,
-            'department_id' => $position->department_id, // <--- UPDATE OTOMATIS
+            'department_id' => $position->department_id,
             'birth_date' => $request->birth_date,
         ];
 

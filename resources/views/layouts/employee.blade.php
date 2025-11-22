@@ -26,13 +26,15 @@
                     <span class="font-medium">Dashboard</span>
                 </a>
                 
+                <!-- Pastikan route('history') ini sesuai dengan di web.php -->
                 <a href="{{ route('history') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition {{ request()->routeIs('history') ? 'bg-indigo-50 text-indigo-600' : '' }}">
                     <i class="fa-solid fa-clock-rotate-left w-6"></i>
                     <span class="font-medium">Riwayat Presensi</span>
                 </a>
 
+
                 <!-- MENU KHUSUS ADMIN (Hanya muncul jika role admin) -->
-                @if(Auth::user() && Auth::user()->role === 'admin')
+                @if(Auth::check() && Auth::user()->role === 'admin')
                     <div class="pt-4 mt-4 border-t border-gray-100">
                         <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Akses HR</p>
                         <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition">

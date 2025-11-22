@@ -3,25 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Position;
-use App\Models\Department; // Pastikan Model Department di-import
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
     public function index()
     {
-        // Ambil data jabatan beserta info departemennya (eager loading)
         $positions = Position::with('department')->get();
         return view('positions.index', compact('positions'));
     }
 
-    // --- PERBAIKAN DI SINI ---
     public function create()
     {
-        // Ambil semua departemen untuk dropdown
-        $departments = Department::all(); 
-        
-        // Kirim variabel $departments ke view
+        $departments = Department::all();
         return view('positions.create', compact('departments'));
     }
 
@@ -29,8 +24,11 @@ class PositionController extends Controller
     {
         $request->validate([
             'department_id' => 'required|exists:departments,id',
-            'title' => 'required|string|max:255',
+            // Tambahkan 'unique:positions,title' agar nama jabatan tidak boleh sama
+            'title' => 'required|string|max:255|unique:positions,title',
             'basic_salary' => 'required|numeric',
+        ], [
+            'title.unique' => 'Nama jabatan ini sudah ada! Tidak boleh duplikat.',
         ]);
 
         Position::create($request->all());
@@ -38,12 +36,9 @@ class PositionController extends Controller
         return redirect()->route('positions.index')->with('success', 'Jabatan berhasil ditambahkan.');
     }
 
-    // --- PERBAIKAN DI SINI JUGA ---
     public function edit(Position $position)
     {
-        // Saat edit, kita juga butuh daftar departemen untuk dropdown
         $departments = Department::all();
-        
         return view('positions.edit', compact('position', 'departments'));
     }
 
@@ -51,8 +46,11 @@ class PositionController extends Controller
     {
         $request->validate([
             'department_id' => 'required|exists:departments,id',
-            'title' => 'required|string|max:255',
+            // Unique dengan pengecualian ID saat ini
+            'title' => 'required|string|max:255|unique:positions,title,' . $position->id,
             'basic_salary' => 'required|numeric',
+        ], [
+            'title.unique' => 'Nama jabatan ini sudah ada! Tidak boleh duplikat.',
         ]);
 
         $position->update($request->all());
@@ -64,10 +62,5 @@ class PositionController extends Controller
     {
         $position->delete();
         return redirect()->route('positions.index')->with('success', 'Jabatan dihapus.');
-    }
-    
-    public function show(Position $position)
-    {
-        return view('positions.show', compact('position'));
     }
 }

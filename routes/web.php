@@ -15,96 +15,60 @@ use App\Http\Controllers\AttendanceController;
 |--------------------------------------------------------------------------
 */
 
+// 1. HALAMAN UTAMA -> LANGSUNG KE LOGIN
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect()->route('login');
 });
 
-// --- AUTHENTICATION ---
+// 2. AUTHENTICATION
 Route::controller(AuthController::class)->group(function () {
+    // Login Pegawai (Nama & Jabatan)
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login');
+
+    // Login Admin (Email & Password)
+    Route::get('/admin/login', 'showAdminLoginForm')->name('admin.login');
+    Route::post('/admin/login', 'adminLogin');
+
     Route::post('/logout', 'logout')->name('logout');
 });
 
-// --- GROUP ADMIN DASHBOARD (WITH prefix name 'admin.') ---
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin.') 
-    ->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    });
+// 3. GROUP ADMIN (HR)
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
-// --- GROUP ADMIN RESOURCES (WITHOUT prefix name 'admin.') ---
-// Separate group to ensure resource names are clean (e.g., 'employees.index')
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    // NO ->name('admin.') HERE
-    ->group(function () {
-        
-        Route::resource('employees', EmployeeController::class)->names([
-            'index' => 'employees.index',
-            'create' => 'employees.create',
-            'store' => 'employees.store',
-            'show' => 'employees.show',
-            'edit' => 'employees.edit',
-            'update' => 'employees.update',
-            'destroy' => 'employees.destroy',
-        ]);
+    // Resource Routes (Tanpa prefix nama 'admin.')
+    Route::resource('employees', EmployeeController::class)->names([
+        'index' => 'employees.index', 'create' => 'employees.create', 'store' => 'employees.store',
+        'show' => 'employees.show', 'edit' => 'employees.edit', 'update' => 'employees.update', 'destroy' => 'employees.destroy'
+    ]);
 
-        Route::resource('departments', DepartmentController::class)->names([
-            'index' => 'departments.index',
-            'create' => 'departments.create',
-            'store' => 'departments.store',
-            'show' => 'departments.show',
-            'edit' => 'departments.edit',
-            'update' => 'departments.update',
-            'destroy' => 'departments.destroy',
-        ]);
+    Route::resource('departments', DepartmentController::class)->names([
+        'index' => 'departments.index', 'create' => 'departments.create', 'store' => 'departments.store',
+        'show' => 'departments.show', 'edit' => 'departments.edit', 'update' => 'departments.update', 'destroy' => 'departments.destroy'
+    ]);
 
-        Route::resource('positions', PositionController::class)->names([
-            'index' => 'positions.index',
-            'create' => 'positions.create',
-            'store' => 'positions.store',
-            'show' => 'positions.show',
-            'edit' => 'positions.edit',
-            'update' => 'positions.update',
-            'destroy' => 'positions.destroy',
-        ]);
+    Route::resource('positions', PositionController::class)->names([
+        'index' => 'positions.index', 'create' => 'positions.create', 'store' => 'positions.store',
+        'show' => 'positions.show', 'edit' => 'positions.edit', 'update' => 'positions.update', 'destroy' => 'positions.destroy'
+    ]);
 
-        Route::resource('salaries', SalaryController::class)->names([
-            'index' => 'salaries.index',
-            'create' => 'salaries.create',
-            'store' => 'salaries.store',
-            'show' => 'salaries.show',
-            'edit' => 'salaries.edit',
-            'update' => 'salaries.update',
-            'destroy' => 'salaries.destroy',
-        ]);
-        
-        // Fix for 'attendances.index' not defined error
-        Route::resource('attendances', AttendanceController::class)->names([
-            'index' => 'attendances.index',
-            'create' => 'attendances.create',
-            'store' => 'attendances.store',
-            'show' => 'attendances.show',
-            'edit' => 'attendances.edit',
-            'update' => 'attendances.update',
-            'destroy' => 'attendances.destroy',
-        ]);
-    });
+    Route::resource('salaries', SalaryController::class)->names([
+        'index' => 'salaries.index', 'create' => 'salaries.create', 'store' => 'salaries.store',
+        'show' => 'salaries.show', 'edit' => 'salaries.edit', 'update' => 'salaries.update', 'destroy' => 'salaries.destroy'
+    ]);
+});
 
-// --- GROUP EMPLOYEE ---
-Route::middleware(['auth', 'role:employee'])
-    ->prefix('employee')
-    ->name('employee.')
-    ->group(function () {
-        Route::get('/dashboard', [AttendanceController::class, 'index'])->name('dashboard');
-        Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
-    });
+// 4. GROUP EMPLOYEE (PEGAWAI) & HISTORY
+Route::middleware(['auth'])->group(function () {
+    // Dashboard Pegawai
+    Route::get('/employee/dashboard', [AttendanceController::class, 'index'])->name('employee.dashboard');
+    
+    // History Presensi (Ini yang tadi error 'Route not defined')
+    // Pastikan namanya 'employee.history' sesuai panggilan di view, atau ubah panggilan di view jadi 'history'
+    // Kita pakai 'history' saja biar simpel, nanti view disesuaikan.
+    Route::get('/employee/history', [AttendanceController::class, 'history'])->name('history'); 
 
-Route::get('/presensi', [AttendanceController::class, 'showGuestForm'])->name('presensi.form');
-Route::post('/presensi', [AttendanceController::class, 'submitGuestAttendance'])->name('presensi.submit');
-
-Route::get('/', function () {
-    return redirect('/presensi'); // Bisa diubah redirect ke presensi jika mau halaman utamanya ini
+    // Proses Simpan Presensi
+    Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
 });

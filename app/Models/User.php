@@ -67,4 +67,10 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+    
+    public function salary()
+    {
+        // Seorang user memiliki satu data gaji (One to One)
+        return $this->hasOne(Salary::class);
+    }
 }

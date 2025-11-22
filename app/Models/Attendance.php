@@ -14,7 +14,13 @@ class Attendance extends Model
         'date',
         'clock_in',
         'clock_out',
-        'status', // Baru
-        'note',   // Baru
+        'status',
+        'note',
     ];
+
+    // Add this relationship
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
