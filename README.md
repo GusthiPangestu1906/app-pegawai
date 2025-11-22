@@ -17,10 +17,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tailwind_CSS_logo_with_dark_text.svg/1024px-Tailwind_CSS_logo_with_dark_text.svg.png" alt="Tailwind CSS">
 </a>
 <a href="https://php.net">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/PHP-777BB4%3Fstyle%3Dfor-the-badge%26logo%3Dphp%26logoColor%3Dwhite" alt="PHP">
-</a>
-<a href="#">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/License-MIT-45b848%3Fstyle%3Dfor-the-badge" alt="License">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1422px-PHP-logo.svg.png" alt="PHP">
 </a>
 </p>
 
