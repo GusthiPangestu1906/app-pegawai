@@ -11,7 +11,7 @@
 <p align="center">
 <!-- Perhatikan: Link di bawah ini langsung ke shields.io, TIDAK ADA https://www.google.com/search?q=google.com -->
 <a href="https://laravel.com">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Laravel-FF2D20%3Fstyle%3Dfor-the-badge%26logo%3Dlaravel%26logoColor%3Dwhite" alt="Laravel 12">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/380px-Laravel.svg.png" alt="Laravel 12">
 </a>
 <a href="https://tailwindcss.com">
 <img src="https://www.google.com/search?q=https://img.shields.io/badge/Tailwind_CSS-38B2AC%3Fstyle%3Dfor-the-badge%26logo%3Dtailwind-css%26logoColor%3Dwhite" alt="Tailwind CSS">
