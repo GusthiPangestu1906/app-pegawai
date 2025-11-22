@@ -44,7 +44,7 @@ Penggajian (Payroll): Perhitungan gaji bulanan dengan komponen gaji pokok, tunja
 
 Mode Gelap (Dark Mode): Antarmuka yang mendukung mode gelap untuk kenyamanan mata pengguna.
 
-🔐 Mengapa Ada Dua Sistem Otentikasi?
+<h2>🔐 Mengapa Ada Dua Sistem Otentikasi?</h2>h2>
 
 Aplikasi ini menerapkan pendekatan Dual-Authentication untuk menyeimbangkan keamanan dan kemudahan penggunaan:
 
@@ -60,7 +60,7 @@ Metode: Login standar Laravel dengan password terenkripsi.
 
 Alasan: Administrator memiliki akses ke data sensitif (seperti gaji dan data pribadi seluruh pegawai), sehingga memerlukan lapisan keamanan ganda yang ketat.
 
-🛠️ Teknologi & Library
+<h2>🛠️ Teknologi & Library</h2>
 
 Kami menggunakan teknologi terkini untuk memastikan performa, keamanan, dan kemudahan pengembangan:
 
@@ -70,7 +70,7 @@ Laravel 12: Framework PHP utama.
 
 PHP 8.2+: Bahasa pemrograman.
 
-MySQL/MariaDB: Database relasional.
+HeidiSQL: Database relasional.
 
 Frontend (Client-Side)
 
@@ -80,7 +80,7 @@ Vite: Build tool aset frontend yang sangat cepat.
 
 Font Awesome: Pustaka ikon vektor untuk UI.
 
-Library Pendukung
+<h2>Library Pendukung</h2>
 
 Eloquent ORM: Manajemen database dan relasi antar tabel.
 
