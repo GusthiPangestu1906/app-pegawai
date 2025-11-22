@@ -44,7 +44,7 @@ Penggajian (Payroll): Perhitungan gaji bulanan dengan komponen gaji pokok, tunja
 
 Mode Gelap (Dark Mode): Antarmuka yang mendukung mode gelap untuk kenyamanan mata pengguna.
 
-<h2>🔐 Mengapa Ada Dua Sistem Otentikasi?</h2>h2>
+<h2>🔐 Mengapa Ada Dua Sistem Otentikasi?</h2>
 
 Aplikasi ini menerapkan pendekatan Dual-Authentication untuk menyeimbangkan keamanan dan kemudahan penggunaan:
 
@@ -89,84 +89,4 @@ Blade Templates: Mesin templating untuk tampilan dinamis.
 Carbon: Manipulasi tanggal dan waktu (untuk fitur presensi).
 
 Laravel Breeze / UI: Dasar sistem otentikasi.
-
-🚀 Instalasi & Penggunaan
-
-Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer lokal Anda:
-
-Clone Repositori
-
-git clone [https://github.com/gusthipangestu1906/app-pegawai.git](https://github.com/gusthipangestu1906/app-pegawai.git)
-cd app-pegawai
-
-
-Install Dependencies
-
-composer install
-npm install
-
-
-Setup Environment
-Salin file konfigurasi dan atur koneksi database.
-
-cp .env.example .env
-php artisan key:generate
-
-
-(Pastikan Anda sudah membuat database kosong di MySQL)
-
-Migrasi Database
-Jalankan migrasi dan seeder untuk mengisi data awal.
-
-php artisan migrate:fresh --seed
-
-
-Jalankan Aplikasi
-Buka dua terminal terpisah:
-
-# Terminal 1
-php artisan serve
-
-# Terminal 2
-npm run dev
-
-
-Akses aplikasi di: http://127.0.0.1:8000
-
-🔑 Akun Demo
-
-Gunakan kredensial berikut untuk mencoba fitur aplikasi setelah menjalankan seeder:
-
-Role
-
-URL Login
-
-Email
-
-Password
-
-Keterangan
-
-Administrator
-
-/admin/login
-
-admin@hr.com
-
-password
-
-Akses penuh ke dashboard
-
-Pegawai
-
-/login
-
-budi@pegawai.com
-
-(Tanpa)
-
-Pilih jabatan sesuai data
-
-📄 Lisensi
-
-Aplikasi ini adalah perangkat lunak open-source di bawah lisensi MIT license.
+<h2></h2>
