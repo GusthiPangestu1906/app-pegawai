@@ -1,0 +1,31 @@
+Update 1.0 : 
+
+Manajemen Data hanya bisa dilakukan oleh admin (HR) seperti bisa CRUD 
+- employee 
+- department 
+- position
+- salaries
+Sedangkan employee hanya bisa presensi saja 
+Maka dari itu diperlukan login untuk mengecek apakah dia admin (HR) atau employee 
+Jadi logikanya adalah jika employee tidak ada dalam data admin(HR) itu maka employee tersebut tidak dapat login ke dalam sistem app pegawai 
+Sedangkan login admin sudah ditentukan username dan passwordnya jadi kalau admin mau login admin harus memasukkan data username dan password yang telah di set diawal 
+
+Jadi logikanya gini kalau semisal mau tambah jabatan itu harus disesuaikan dulu dengan departemen yang ada 
+
+Jadi logikanya di pegawai itu nggak perlu milih departemen lagi kan datanya departemen sekarang sudah pasti ada di jabatan kan jadi di pegawai langsung masukin jabatan saja 
+
+Jadi logikanya gini ketika pegawai login untuk absen pegawai itu harus terlebih dulu telah didaftarkan oleh admin jadi nanti ketika pegawai login untuk presensi pegawai hanya tinggal memasukkan nama dan jabatannya jika ada datanya maka pegawai boleh melakukan presensi jika tidak ada maka pegawai tidak dapat presensi 
+
+Jadi logikanya gini pegawai punya halaman sendiri untuk bisa melihat data riwayat presensinya juga, ditambah portal presensi itu harusnya juga ada fitur kalau semisal pegawai sedang sakit / izin juga ya  
+
+Jadi gini pertama semua pegawai wajib login sebagai pegawai dan melakukan presensi setelah itu baru dalam page pegawai terdapat fitur untuk untuk login jadi admin 
+
+
+Update 2.0 versi Admin : 
+
+- Di dalam jabatan itu harus ada pengelompokan jadi ketika admin membuka data jabatan admin tidak perlu bingung untuk melihat data yang banyak tapi hanya data yang telah dikategorikan saja 
+- Di dalam penggajian itu harus ada fitur untuk pencarian berdasarkan nama pegawai dan harus dikategorikan berdasarkan departemen untuk memudahkan dalam pencarian
+- Di dalam departemen itu harus ada fitur untuk melihat ada berapa banyak orang / jabatan yang bekerja dalam departemen itu 
+- Di dalam data pegawai itu harus ada fitur untuk melihat detail dari karyawan tersebut seperti apa semisal gajinya berapa, jabatannya apa, dan semua datanya beserta semua data history absensi nya 
+- Update fitur login jadi kalau semisal login itu sekarang harus ada password nya masing-masing untuk menjaga keamanan data mereka dan hilangkan kolom jabatan untuk validasi dengan ketentuan password harus sama dengan database yang ada di admin 
+

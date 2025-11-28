@@ -1,0 +1,37 @@
+import numpy as np
+from sklearn.metrics import r2_score
+
+# Data dari Soal 4
+t = np.array([1, 2, 3, 4, 6, 8, 11])
+St = np.array([23, 38, 35, 45, 56, 68, 77])
+
+# Regresi Polinomial Orde 2 (Kuadratik)
+# Model: St = c + b*t + a*t^2
+# polyfit mengembalikan koefisien urutan pangkat tertinggi ke terendah [a, b, c]
+coeffs = np.polyfit(t, St, 2)
+a_poly = coeffs[0] # Koefisien t^2 (Setengah Gravitasi / 0.5g)
+b_poly = coeffs[1] # Koefisien t (Kecepatan Awal / V0)
+c_poly = coeffs[2] # Intercept (Jarak Awal / S0)
+
+# Menghitung Prediksi
+St_pred = np.polyval(coeffs, t)
+
+# Menghitung R-squared
+r2 = r2_score(St, St_pred)
+
+# Menghitung g (Percepatan Gravitasi)
+# Karena a_poly = 0.5 * g, maka g = 2 * a_poly
+g = 2 * a_poly
+
+print("Hasil Analisis Regresi Polinomial (Soal 4):")
+print("-" * 30)
+print(f"Koefisien t^2 (Beta 2): {a_poly:.5f}")
+print(f"Koefisien t   (Beta 1): {b_poly:.5f}")
+print(f"Intercept     (Beta 0): {c_poly:.5f}")
+print("-" * 30)
+print("Interpretasi Parameter Fisika:")
+print(f"S0 (Jarak Awal)      : {c_poly:.4f} m")
+print(f"V0 (Kecepatan Awal)  : {b_poly:.4f} m/s")
+print(f"g  (Gravitasi)       : {g:.4f} m/s^2")
+print("-" * 30)
+print(f"Koefisien Determinasi (R^2): {r2:.4f}")

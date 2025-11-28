@@ -1,34 +1,5 @@
-<p align="center">
-<a href="https://laravel.com" target="_blank">
-<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-</a>
-</p>
-
-<p align="center">
-<h1 align="center">Sistem Informasi Manajemen Kepegawaian (HR System)</h1>
-</p>
-
-<p align="center">
-<!-- Perhatikan: Link di bawah ini langsung ke shields.io, TIDAK ADA https://www.google.com/search?q=google.com -->
-<a href="https://laravel.com">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Laravel-FF2D20%3Fstyle%3Dfor-the-badge%26logo%3Dlaravel%26logoColor%3Dwhite" alt="Laravel 12">
-</a>
-<a href="https://tailwindcss.com">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Tailwind_CSS-38B2AC%3Fstyle%3Dfor-the-badge%26logo%3Dtailwind-css%26logoColor%3Dwhite" alt="Tailwind CSS">
-</a>
-<a href="https://php.net">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/PHP-777BB4%3Fstyle%3Dfor-the-badge%26logo%3Dphp%26logoColor%3Dwhite" alt="PHP">
-</a>
-<a href="#">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/License-MIT-45b848%3Fstyle%3Dfor-the-badge" alt="License">
-</a>
-</p>
-
-<p align="center">
-<strong>Dibuat oleh:</strong> Gusthi Pangestu &nbsp;•&nbsp;
-<strong>NRP:</strong> 3124600098 &nbsp;•&nbsp;
-<strong>Kelas:</strong> D4 IT D
-</p>
+📘 Sistem Informasi Manajemen Kepegawaian (HR System)
+<p align="center"> <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo"> </p> <p align="center"> <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"></a> <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"></a> <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"></a> <img src="https://img.shields.io/badge/License-MIT-45b848?style=for-the-badge"> </p> <p align="center"> <strong>Dibuat oleh:</strong> Gusthi Pangestu • <strong>NRP:</strong> 3124600098 • <strong>Kelas:</strong> D4 IT D </p>
 
 📖 Tentang Aplikasi
 
@@ -74,13 +45,13 @@ Mode Gelap (Dark Mode): Antarmuka yang mendukung mode gelap untuk kenyamanan mat
 
 Aplikasi ini menerapkan pendekatan Dual-Authentication untuk menyeimbangkan keamanan dan kemudahan penggunaan:
 
-Otentikasi Pegawai (Tanpa Password)
+1. Otentikasi Pegawai (Tanpa Password)
 
 Metode: Login menggunakan Email & Jabatan.
 
-Alasan: Dirancang untuk kecepatan dan kemudahan akses harian, terutama di lingkungan kerja yang sibuk atau penggunaan perangkat bersama (kiosk mode). Keamanan tetap terjaga karena email bersifat unik.
+Alasan: Dirancang untuk kecepatan dan kemudahan akses harian, terutama di lingkungan kerja yang sibuk atau penggunaan perangkat bersama (kiosk mode). Keamanan tetap terjaga karena email bersifat unik dan validasi jabatan.
 
-Otentikasi Administrator (Email & Password)
+2. Otentikasi Administrator (Email & Password)
 
 Metode: Login standar Laravel dengan password terenkripsi.
 
@@ -104,7 +75,7 @@ Tailwind CSS v4: Framework CSS utility-first untuk desain modern.
 
 Vite: Build tool aset frontend yang sangat cepat.
 
-Font Awesome: Pustaka ikon vektor untuk UI.
+Font Awesome: Pustaka ikon vektor untuk UI (Sidebar, Tombol).
 
 Library Pendukung
 
