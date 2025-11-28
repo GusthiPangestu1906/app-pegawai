@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 📘 Sistem Informasi Manajemen Kepegawaian (HR System)
 <p align="center"> <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo"> </p> <p align="center"> <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"></a> <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"></a> <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"></a> <img src="https://img.shields.io/badge/License-MIT-45b848?style=for-the-badge"> </p> <p align="center"> <strong>Dibuat oleh:</strong> Gusthi Pangestu • <strong>NRP:</strong> 3124600098 • <strong>Kelas:</strong> D4 IT D </p>
 
 📖 Tentang Aplikasi
+=======
+<p align="center">
+<h1 align="center">Sistem Informasi Manajemen Kepegawaian (HR System)</h1>
+</p>
+
+<p align="center"> <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo"> </p> <p align="center"> <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"></a> <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"></a> <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"></a> <img src="https://img.shields.io/badge/License-MIT-45b848?style=for-the-badge"> </p> <p align="center"> <strong>Dibuat oleh:</strong> Gusthi Pangestu | <strong>NRP:</strong> 3124600098 | <strong>Kelas:</strong> D4 IT D </p>
+
+<h2>📖 Tentang Aplikasi</h2>
+>>>>>>> 966cbc393aa7b356400779aacc5acd418eb5d474
 
 HR System adalah aplikasi manajemen Sumber Daya Manusia (SDM) berbasis web modern yang dirancang untuk menyederhanakan proses administrasi perusahaan. Aplikasi ini menangani pengelolaan data pegawai, struktur organisasi (departemen & jabatan), penggajian otomatis, serta sistem presensi harian yang real-time.
 
 Dibangun di atas fondasi Laravel 12 yang kuat dan antarmuka Tailwind CSS yang responsif, aplikasi ini menawarkan pengalaman pengguna yang cepat, aman, dan nyaman.
 
-🌟 Fitur Unggulan
+<h2>🌟 Fitur Unggulan</h2>
 
 1. Portal Pegawai (Self-Service)
 
@@ -41,7 +51,7 @@ Penggajian (Payroll): Perhitungan gaji bulanan dengan komponen gaji pokok, tunja
 
 Mode Gelap (Dark Mode): Antarmuka yang mendukung mode gelap untuk kenyamanan mata pengguna.
 
-🔐 Mengapa Ada Dua Sistem Otentikasi?
+<h2>🔐 Mengapa Ada Dua Sistem Otentikasi?</h2>
 
 Aplikasi ini menerapkan pendekatan Dual-Authentication untuk menyeimbangkan keamanan dan kemudahan penggunaan:
 
@@ -57,7 +67,7 @@ Metode: Login standar Laravel dengan password terenkripsi.
 
 Alasan: Administrator memiliki akses ke data sensitif (seperti gaji dan data pribadi seluruh pegawai), sehingga memerlukan lapisan keamanan ganda yang ketat.
 
-🛠️ Teknologi & Library
+<h2>🛠️ Teknologi & Library</h2>
 
 Kami menggunakan teknologi terkini untuk memastikan performa, keamanan, dan kemudahan pengembangan:
 
@@ -67,7 +77,7 @@ Laravel 12: Framework PHP utama.
 
 PHP 8.2+: Bahasa pemrograman.
 
-MySQL/MariaDB: Database relasional.
+HeidiSQL: Database relasional.
 
 Frontend (Client-Side)
 
@@ -77,7 +87,7 @@ Vite: Build tool aset frontend yang sangat cepat.
 
 Font Awesome: Pustaka ikon vektor untuk UI (Sidebar, Tombol).
 
-Library Pendukung
+<h2>Library Pendukung</h2>
 
 Eloquent ORM: Manajemen database dan relasi antar tabel.
 
@@ -86,84 +96,4 @@ Blade Templates: Mesin templating untuk tampilan dinamis.
 Carbon: Manipulasi tanggal dan waktu (untuk fitur presensi).
 
 Laravel Breeze / UI: Dasar sistem otentikasi.
-
-🚀 Instalasi & Penggunaan
-
-Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer lokal Anda:
-
-Clone Repositori
-
-git clone [https://github.com/gusthipangestu1906/app-pegawai.git](https://github.com/gusthipangestu1906/app-pegawai.git)
-cd app-pegawai
-
-
-Install Dependencies
-
-composer install
-npm install
-
-
-Setup Environment
-Salin file konfigurasi dan atur koneksi database.
-
-cp .env.example .env
-php artisan key:generate
-
-
-(Pastikan Anda sudah membuat database kosong di MySQL)
-
-Migrasi Database
-Jalankan migrasi dan seeder untuk mengisi data awal.
-
-php artisan migrate:fresh --seed
-
-
-Jalankan Aplikasi
-Buka dua terminal terpisah:
-
-# Terminal 1
-php artisan serve
-
-# Terminal 2
-npm run dev
-
-
-Akses aplikasi di: http://127.0.0.1:8000
-
-🔑 Akun Demo
-
-Gunakan kredensial berikut untuk mencoba fitur aplikasi setelah menjalankan seeder:
-
-Role
-
-URL Login
-
-Email
-
-Password
-
-Keterangan
-
-Administrator
-
-/admin/login
-
-admin@hr.com
-
-password
-
-Akses penuh ke dashboard
-
-Pegawai
-
-/login
-
-budi@pegawai.com
-
-(Tanpa)
-
-Pilih jabatan sesuai data
-
-📄 Lisensi
-
-Aplikasi ini adalah perangkat lunak open-source di bawah lisensi MIT license.
+<h2></h2>
