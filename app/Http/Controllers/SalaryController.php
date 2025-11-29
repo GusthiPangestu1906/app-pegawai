@@ -31,9 +31,9 @@ class SalaryController extends Controller
 
     public function create()
     {
-        // Ambil pegawai yang belum punya data gaji
+        // Ambil SEMUA pegawai, dan sertakan data relasi yang dibutuhkan untuk pencarian
         $employees = User::where('role', 'employee')
-                         ->whereDoesntHave('salary') 
+                         ->with(['position', 'department', 'salary']) 
                          ->get();
                          
         return view('salaries.create', compact('employees'));
@@ -90,5 +90,25 @@ class SalaryController extends Controller
     public function show(Salary $salary)
     {
         return view('salaries.show', compact('salary'));
+    }
+
+    /**
+     * Approve the salary.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Salary  $salary
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Request $request, Salary $salary)
+    {
+        // NOTE: Make sure to run the migration to add the approval columns to the salaries table.
+        // The migration file is: 2024_05_22_100000_add_approval_columns_to_salaries_table.php
+
+        $salary->update([
+            'approved_at' => now(),
+            'approved_by' => auth()->id(),
+        ]);
+
+        return redirect()->route('salaries.show', $salary)->with('success', 'Gaji telah disetujui.');
     }
 }

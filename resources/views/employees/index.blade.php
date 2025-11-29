@@ -40,23 +40,25 @@
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Lengkap</th>
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Jabatan</th>
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Aksi</th>
+                    <!-- Header Aksi dikosongkan agar lebih bersih -->
+                    <th class="px-6 py-4 w-10"></th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 @forelse($employees as $employee)
                 
+                <!-- Baris Tabel dengan Efek Hover dan Klik -->
                 <tr onclick="window.location='{{ route('employees.show', $employee->id) }}'" 
                     class="hover:bg-blue-50 dark:hover:bg-gray-700/50 transition duration-150 cursor-pointer group">
                     
-                    <!-- BAGIAN INI YANG DIPERBARUI -->
                     <td class="px-6 py-4">
                         <div class="flex items-center">
-                            <!-- Cek apakah ada foto profil -->
+                            <!-- Foto Profil -->
                             @if($employee->profile_photo_path)
-                                <img class="h-10 w-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700 shadow-sm" src="{{ asset('storage/' . $employee->profile_photo_path) }}" alt="{{ $employee->name }}">
+                                <img class="h-10 w-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700 shadow-sm" 
+                                     src="{{ asset('storage/' . $employee->profile_photo_path) }}" 
+                                     alt="{{ $employee->name }}">
                             @else
-                                <!-- Jika tidak ada, tampilkan inisial -->
                                 <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-sm border-2 border-white dark:border-gray-700">
                                     {{ substr($employee->name, 0, 1) }}
                                 </div>
@@ -68,7 +70,6 @@
                             </div>
                         </div>
                     </td>
-                    <!-- SELESAI BAGIAN FOTO -->
                     
                     <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
                         <div class="flex flex-col">
@@ -83,29 +84,14 @@
                         </span>
                     </td>
                     
-                    <td class="px-6 py-4 text-right text-sm font-medium" onclick="event.stopPropagation()">
-                        <div class="flex justify-end gap-2">
-                            <a href="{{ route('employees.show', $employee->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 p-2 rounded transition z-10 relative" title="Lihat Detail">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-
-                            <a href="{{ route('employees.edit', $employee->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 p-2 rounded transition z-10 relative" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            
-                            <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus pegawai ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded transition z-10 relative" title="Hapus">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
+                    <!-- Elemen Pengganti Aksi (Panah Sederhana) -->
+                    <td class="px-6 py-4 text-right text-gray-400 dark:text-gray-500">
+                        <i class="fa-solid fa-chevron-right group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"></i>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <td colspan="4" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                         <div class="flex flex-col items-center justify-center">
                             <i class="fa-solid fa-folder-open text-4xl text-gray-300 dark:text-gray-600 mb-3"></i>
                             <p class="text-lg font-medium">Belum ada data pegawai.</p>

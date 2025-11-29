@@ -99,7 +99,7 @@
                     <i class="fa-solid fa-briefcase text-blue-500"></i>
                     <h4 class="font-bold text-gray-800 dark:text-white">Informasi Pekerjaan</h4>
                 </div>
-                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
                     <div>
                         <label class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Departemen</label>
                         <div class="mt-1 flex items-center gap-2">
@@ -123,6 +123,29 @@
                                 <p class="font-semibold text-gray-800 dark:text-gray-200">{{ $employee->position->title ?? '-' }}</p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">Posisi Saat Ini</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Status Penggajian</label>
+                        <div class="mt-1 flex items-center gap-2">
+                             @if($employee->salaries && $employee->salaries->isNotEmpty())
+                                <div class="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-lg">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 dark:text-gray-200">Sudah Pernah Digaji</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Pegawai ini memiliki riwayat penggajian dalam sistem.</p>
+                                </div>
+                            @else
+                                <div class="p-2 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 rounded-lg">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 dark:text-gray-200">Belum Pernah Digaji</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Tidak ada riwayat penggajian yang ditemukan.</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

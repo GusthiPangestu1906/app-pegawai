@@ -10,10 +10,10 @@
         </a>
     </div>
 
-    <!-- Pemberitahuan untuk Admin -->
+    <!-- Info UX -->
     <div class="mb-4 p-3 bg-blue-50 text-blue-700 text-sm rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800 flex items-center gap-2">
         <i class="fa-solid fa-circle-info"></i>
-        <span>Klik pada baris tabel untuk melihat detail departemen.</span>
+        <span>Klik pada baris tabel untuk melihat detail, mengedit, atau menghapus departemen.</span>
     </div>
 
     <div class="bg-white dark:bg-dark-card rounded-lg shadow-sm overflow-hidden border border-gray-100 dark:border-dark-border">
@@ -22,15 +22,16 @@
                 <tr>
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-16">No</th>
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Departemen</th>
+                    <!-- Kolom Statistik SUDAH DIHAPUS -->
                     <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Deskripsi</th>
-                    <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Aksi</th>
+                    <!-- Header Aksi Dikosongkan -->
+                    <th class="px-6 py-4 w-10"></th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 @forelse($departments as $department)
                 
-                <!-- 1. Tambahkan onclick di sini untuk redirect ke halaman Show -->
-                <!-- 2. Tambahkan class 'cursor-pointer' -->
+                <!-- Baris Tabel Bisa Diklik -->
                 <tr onclick="window.location='{{ route('departments.show', $department->id) }}'" 
                     class="hover:bg-blue-50 dark:hover:bg-gray-700/50 transition duration-150 cursor-pointer group">
                     
@@ -39,32 +40,21 @@
                     <td class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-gray-100">
                         {{ $department->name }}
                     </td>
-
-                    <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ Str::limit($department->description, 50) ?? '-' }}</td>
                     
-                    <!-- 3. PENTING: Tambahkan onclick="event.stopPropagation()" di TD ini -->
-                    <!-- Gunanya agar saat klik tombol Edit/Hapus, tidak malah pindah ke halaman Detail -->
-                    <td class="px-6 py-4 text-right text-sm font-medium" onclick="event.stopPropagation()">
-                        <div class="flex justify-end gap-2">
-                            <!-- Tombol Mata dihapus karena seluruh baris sudah bisa diklik -->
+                    <!-- Data Statistik juga dihapus dari sini -->
 
-                            <a href="{{ route('departments.edit', $department->id) }}" class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 p-2 rounded transition z-10 relative" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            
-                            <form action="{{ route('departments.destroy', $department->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus departemen ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 p-2 rounded transition z-10 relative" title="Hapus">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
+                    <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                        {{ Str::limit($department->description, 80) ?? '-' }}
+                    </td>
+                    
+                    <!-- Indikator Panah (Pengganti Tombol Aksi) -->
+                    <td class="px-6 py-4 text-right text-gray-400 dark:text-gray-500">
+                        <i class="fa-solid fa-chevron-right group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"></i>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada data departemen.</td>
+                    <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada data departemen.</td>
                 </tr>
                 @endforelse
             </tbody>

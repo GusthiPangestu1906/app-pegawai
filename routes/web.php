@@ -71,6 +71,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         'index' => 'salaries.index', 'create' => 'salaries.create', 'store' => 'salaries.store',
         'show' => 'salaries.show', 'edit' => 'salaries.edit', 'update' => 'salaries.update', 'destroy' => 'salaries.destroy'
     ]);
+
+    Route::patch('salaries/{salary}/approve', [SalaryController::class, 'approve'])->name('salaries.approve');
 });
 
 // 4. GROUP EMPLOYEE (PEGAWAI) & HISTORY
