@@ -9,7 +9,8 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $departments = Department::all();
+        // Use withCount to get the number of related users and positions
+        $departments = Department::withCount(['users', 'positions'])->get();
         return view('departments.index', compact('departments'));
     }
 
@@ -18,17 +19,13 @@ class DepartmentController extends Controller
         return view('departments.create');
     }
 
-    // --- UPDATE VALIDASI STORE ---
     public function store(Request $request)
     {
         $request->validate([
-            // unique:nama_tabel,nama_kolom
             'name' => 'required|string|max:255|unique:departments,name',
             'description' => 'nullable|string',
         ], [
-            // Custom pesan error
             'name.unique' => 'Nama departemen ini sudah ada! Silakan gunakan nama lain.',
-            'name.required' => 'Nama departemen wajib diisi.',
         ]);
 
         Department::create($request->all());
@@ -36,22 +33,28 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index')->with('success', 'Departemen berhasil ditambahkan.');
     }
 
+    public function show(Department $department)
+    {
+        // Load relasi 'positions' (jabatan)
+        // Load relasi 'users' (pegawai) beserta 'position'-nya
+        $department->load(['positions', 'users.position']);
+        
+        return view('departments.show', compact('department'));
+    }
+
+
     public function edit(Department $department)
     {
         return view('departments.edit', compact('department'));
     }
 
-    // --- UPDATE VALIDASI UPDATE ---
     public function update(Request $request, Department $department)
     {
         $request->validate([
-            // unique:departments,name,ID_YANG_DIABAIKAN
-            // Kita perlu mengecualikan ID departemen ini sendiri agar tidak error saat simpan diri sendiri
             'name' => 'required|string|max:255|unique:departments,name,' . $department->id,
             'description' => 'nullable|string',
         ], [
             'name.unique' => 'Nama departemen ini sudah ada! Silakan gunakan nama lain.',
-            'name.required' => 'Nama departemen wajib diisi.',
         ]);
 
         $department->update($request->all());

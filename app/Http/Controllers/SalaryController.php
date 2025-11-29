@@ -8,16 +8,30 @@ use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $salaries = Salary::with('employee')->latest()->get();
-        return view('salaries.index', compact('salaries'));
+        // Mulai query Gaji dengan relasi ke employee (User), jabatan, dan departemen
+        $query = Salary::with(['employee.department', 'employee.position']);
+
+        // Fitur Pencarian: Cari berdasarkan nama pegawai
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->whereHas('employee', function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Ambil data, urutkan terbaru, lalu KELOMPOKKAN berdasarkan Nama Departemen
+        $groupedSalaries = $query->latest()->get()->groupBy(function($item) {
+            return $item->employee->department->name ?? 'Tanpa Departemen';
+        });
+
+        return view('salaries.index', compact('groupedSalaries'));
     }
 
     public function create()
     {
-        // Ambil user role employee yang BELUM punya data gaji
-        // Agar dropdown bersih, hanya menampilkan pegawai yang belum digaji
+        // Ambil pegawai yang belum punya data gaji
         $employees = User::where('role', 'employee')
                          ->whereDoesntHave('salary') 
                          ->get();
@@ -25,11 +39,9 @@ class SalaryController extends Controller
         return view('salaries.create', compact('employees'));
     }
 
-    // PROSES SIMPAN
     public function store(Request $request)
     {
         $request->validate([
-            // Tambahkan 'unique:salaries,user_id'
             'user_id' => 'required|exists:users,id|unique:salaries,user_id',
             'base_salary' => 'required|numeric',
         ], [
@@ -53,7 +65,6 @@ class SalaryController extends Controller
         return view('salaries.edit', compact('salary'));
     }
 
-    // PROSES UPDATE
     public function update(Request $request, Salary $salary)
     {
         $request->validate([

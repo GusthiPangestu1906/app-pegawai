@@ -23,9 +23,11 @@ Jadi gini pertama semua pegawai wajib login sebagai pegawai dan melakukan presen
 
 Update 2.0 versi Admin : 
 
-- Di dalam jabatan itu harus ada pengelompokan jadi ketika admin membuka data jabatan admin tidak perlu bingung untuk melihat data yang banyak tapi hanya data yang telah dikategorikan saja 
-- Di dalam penggajian itu harus ada fitur untuk pencarian berdasarkan nama pegawai dan harus dikategorikan berdasarkan departemen untuk memudahkan dalam pencarian
-- Di dalam departemen itu harus ada fitur untuk melihat ada berapa banyak orang / jabatan yang bekerja dalam departemen itu 
+- Di dalam jabatan itu harus ada pengelompokan jadi ketika admin membuka data jabatan admin tidak perlu bingung untuk melihat data yang banyak tapi hanya data yang telah dikategorikan saja (Done)
+- Di dalam jabatan itu harus ada fitur pencarian untuk memudahkan admin dalam mencari data (Done)
+- Di dalam penggajian itu harus ada fitur untuk pencarian berdasarkan nama pegawai dan harus dikategorikan berdasarkan departemen untuk memudahkan dalam pencarian (Done)
+- Di dalam departemen itu harus ada fitur untuk melihat ada berapa banyak orang / jabatan yang bekerja dalam departemen itu (Done)
+- Di dalam manajemen pegawai hilangkan kolom departemen dan tambahkan fitur supaya admin bisa langsung bisa mengecek seluruh info lengkap dari pegawai itu 
 - Di dalam data pegawai itu harus ada fitur untuk melihat detail dari karyawan tersebut seperti apa semisal gajinya berapa, jabatannya apa, dan semua datanya beserta semua data history absensi nya 
 - Update fitur login jadi kalau semisal login itu sekarang harus ada password nya masing-masing untuk menjaga keamanan data mereka dan hilangkan kolom jabatan untuk validasi dengan ketentuan password harus sama dengan database yang ada di admin 
 

@@ -117,4 +117,28 @@ class EmployeeController extends Controller
         $employee = User::findOrFail($id);
         return view('employees.show', compact('employee'));
     }
+
+    public function updatePhoto(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimal 2MB
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if ($request->hasFile('photo')) {
+            // 1. Hapus foto lama jika ada (agar tidak menuh-menuhin server)
+            if ($user->profile_photo_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->profile_photo_path)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_photo_path);
+            }
+
+            // 2. Simpan foto baru
+            $path = $request->file('photo')->store('profile-photos', 'public');
+            
+            // 3. Update database
+            $user->update(['profile_photo_path' => $path]);
+        }
+
+        return back()->with('success', 'Foto profil berhasil diperbarui.');
+    }
 }

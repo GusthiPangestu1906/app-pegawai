@@ -37,6 +37,20 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+    // --- TAMBAHKAN RUTE INI (KHUSUS UPLOAD FOTO) ---
+    Route::patch('/employees/{id}/update-photo', [EmployeeController::class, 'updatePhoto'])->name('employees.update-photo');
+
+    // Resource Routes Pegawai
+    Route::resource('employees', EmployeeController::class)->names([
+        'index' => 'employees.index',
+        'create' => 'employees.create',
+        'store' => 'employees.store',
+        'show' => 'employees.show',
+        'edit' => 'employees.edit',
+        'update' => 'employees.update',
+        'destroy' => 'employees.destroy',
+    ]);
+
     // Resource Routes (Tanpa prefix nama 'admin.')
     Route::resource('employees', EmployeeController::class)->names([
         'index' => 'employees.index', 'create' => 'employees.create', 'store' => 'employees.store',

@@ -14,12 +14,13 @@ class Department extends Model
         'description',
     ];
 
-    // Relasi: Departemen punya banyak Jabatan
+    // Relasi ke Jabatan
     public function positions()
     {
         return $this->hasMany(Position::class);
     }
 
+    // Relasi ke Pegawai (User)
     public function users()
     {
         return $this->hasMany(User::class);
